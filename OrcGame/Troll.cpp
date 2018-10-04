@@ -3,7 +3,27 @@
 using namespace std;
 
 
-void Troll::attack()
+short Troll::attack()
 {
-	cout << "Average Dooper is flapping and flying" << endl;
+	return 5;
+}
+
+short Troll::radomizeAction()
+{
+	short random = rand() % 2;
+	short toReturn = 0;
+	if (random == 0)
+	{
+		toReturn = atkPower;
+	}
+	if (random == 1)
+	{
+		toReturn = atkPower;
+
+	}
+	if (random == 3)
+	{
+		toReturn = atkPower;
+	}
+	return toReturn;
 }

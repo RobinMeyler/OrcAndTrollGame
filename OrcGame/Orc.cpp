@@ -11,7 +11,18 @@ void Orc::walk()
 { 
 	cout << "Doopers have a really cool walk!" << endl; 
 }
-void Orc::attack()
+short Orc::attack()
 { 
-	cout << "Dooper is flapping and flying" << endl;
+	return atkPower;
 }
+
+short Orc::getHealth()
+{
+	return health;
+}
+
+void Orc::decreaseHealth()
+{
+	health = health - 2;
+}
+
