@@ -5,9 +5,9 @@
 using namespace std;
 
 void runTextInfo(short t_bossNum);
-void runAttack(Orc *t_player, short *t_enemy );
-void runDefence();
-void runDodge();
+void runAttack(Orc *t_player, Troll *t_enemy );
+void runDefence(Orc *t_player, Troll *t_enemy);
+void runDodge(Orc *t_player, Troll *t_enemy);
 void runLevelUp();
 void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy );
 
@@ -18,9 +18,8 @@ int main()
 	Orc *player = &orc;
 	Troll *enemy = &troll;
 	Orc **superPTR = &player;  // Example of a pointer to pointer
-
 	short bossNum = 1;
-	cout << "You're storming the castle, a troll attacks you from behind like a coward, \nyou brush him back, a fight ensues" << endl;
+	cout << "You're storming the castle, a troll attacks you from behind like a coward, \nYou brush him back, a fight ensues" << endl;
 	while (player->getAlive() == true)
 	{
 		runTextInfo(bossNum);
@@ -35,17 +34,55 @@ int main()
 	
 }
 
-void runAttack(Orc *t_player, short *t_enemy)
+void runAttack(Orc *t_player, Troll *t_enemy)
 {
-	t_player->decreaseHealth();
-}
-void runDefence()
-{
+	short enemyMove = t_enemy->radomizeAction();
+	if (enemyMove == 0) // Attacks
+	{
+		t_player->decreaseHealth(t_enemy->attack());
+		t_enemy->decreaseHealth(t_player->attack());
+	}
+	else if (enemyMove == 1)	// Shields
+	{
+		t_player->decreaseHealth(1);
+	}
+	else if (enemyMove == 2)	// Dodges
+	{
+
+	}
 
 }
-void runDodge()
+void runDefence(Orc *t_player, Troll *t_enemy)
 {
+	short enemyMove = t_enemy->radomizeAction();
+	if (enemyMove == 0) // Attacks
+	{
+		
+	}
+	else if (enemyMove == 1)	// Shields
+	{
 
+	}
+	else if (enemyMove == 2)	// Dodges
+	{
+
+	}
+}
+void runDodge(Orc *t_player, Troll *t_enemy)
+{
+	short enemyMove = t_enemy->radomizeAction();
+	if (enemyMove == 0) // Attacks
+	{
+	
+	}
+	else if (enemyMove == 1)	// Shields
+	{
+
+	}
+	else if (enemyMove == 2)	// Dodges
+	{
+
+	}
 }
 void runLevelUp()
 {
@@ -83,20 +120,18 @@ void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy)
 		cout << "What action do you take?" << endl;
 		cout << "1: Attack, 2: Shield 3: Dodge" << endl;
 		cin >> input;
-		short enemyAction = t_enemy->radomizeAction();
-		short *enemyActionPtr = &enemyAction;
+		
 		if (input == 1)
 		{
-			runAttack(t_player, enemyActionPtr);
-			std::cout << t_player->getHealth() << std::endl;
+			runAttack(t_player, t_enemy);
 		}
 		else if (input == 2)
 		{
-			runDefence();
+			runDefence(t_player, t_enemy);
 		}
 		else if (input == 3)
 		{
-			runDodge();
+			runDodge(t_player, t_enemy);
 		}
 	}
 }

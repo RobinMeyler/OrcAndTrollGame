@@ -13,11 +13,6 @@ void Character::flip()
 	cout << "just in case they are too young to walk yet" << endl;
 }
 
- short Character::getDodge()
- {
-	 return dodge;
- }
-
 
  bool Character::getAlive()
  { 
@@ -35,3 +30,10 @@ void Character::flip()
 		 isAlive = true;
 	 }
  }
+
+ short Character::getHealth()
+ {
+	 return 0;
+ }
+
+ 

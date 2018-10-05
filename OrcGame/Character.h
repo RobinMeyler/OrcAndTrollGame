@@ -8,17 +8,16 @@ public:
 	void flip();
 	virtual void walk();
 	virtual short attack() = 0; //pure virtual function
-	short getDodge();
 
+	virtual short getHealth();
+	virtual void decreaseHealth(short t_value) = 0;
 	//Standard
 	bool getAlive();
 	void changeAliveStatus();
 
 private:
 	bool  isAlive = true;
-	short	health;
-	short	atkPower;
-	short	dodge = 5;
+	
 };
 
 

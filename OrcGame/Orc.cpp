@@ -21,8 +21,9 @@ short Orc::getHealth()
 	return health;
 }
 
-void Orc::decreaseHealth()
+void Orc::decreaseHealth(short t_value)
 {
-	health = health - 2;
+	health = health - t_value;
 }
+
 
