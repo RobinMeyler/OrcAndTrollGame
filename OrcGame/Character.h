@@ -12,7 +12,7 @@ public:
 	virtual short getHealth();
 	virtual void decreaseHealth(short t_value) = 0;
 	//Standard
-	bool getAlive();
+	virtual bool getAlive();
 	void changeAliveStatus();
 
 private:

@@ -32,3 +32,24 @@ void Troll::decreaseHealth(short t_value)
 {
 	health = health - t_value;
 }
+
+void Troll::setBossStats(short t_health, short t_atk, short t_def, short t_dodge)
+{
+	health =  t_health;
+	atkPower =  t_atk;
+	shield =  t_def;
+	dodge =  t_dodge;
+}
+
+bool Troll::getAlive()
+{
+	if (health > 0)
+	{
+		isAlive = true;
+	}
+	else
+	{
+		isAlive = false;
+	}
+	return isAlive;
+}

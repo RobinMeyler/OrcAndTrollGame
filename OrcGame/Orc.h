@@ -7,12 +7,14 @@ public:
 	void walk();
 	short attack();
 	short getHealth();
+	bool getAlive();
 	void decreaseHealth(short t_value);
 private:
 	short	health = 5;
 	short	atkPower = 2;
 	short	dodge = 2;
 	short	defence = 1;
+	bool	isAlive = true;
 };
 
 

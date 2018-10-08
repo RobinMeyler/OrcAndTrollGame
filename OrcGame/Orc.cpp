@@ -26,4 +26,16 @@ void Orc::decreaseHealth(short t_value)
 	health = health - t_value;
 }
 
+bool Orc::getAlive()
+{
+	if (health > 0)
+	{
+		isAlive = true;
+	}
+	else
+	{
+		isAlive = false;
+	}
+	return isAlive;
+}
 
