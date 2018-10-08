@@ -41,6 +41,12 @@ void Troll::setBossStats(short t_health, short t_atk, short t_def, short t_dodge
 	dodge =  t_dodge;
 }
 
+void Troll::weakenShield(short t_value)
+{
+	if (shield > 0)
+		shield = shield - t_value;
+}
+
 bool Troll::getAlive()
 {
 	if (health > 0)
@@ -52,4 +58,14 @@ bool Troll::getAlive()
 		isAlive = false;
 	}
 	return isAlive;
+}
+
+short Troll::getShield()
+{
+	return shield;
+}
+
+short Troll::getDodge()
+{
+	return dodge;
 }

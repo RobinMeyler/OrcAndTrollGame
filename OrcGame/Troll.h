@@ -10,6 +10,9 @@ class Troll : public Character {
 		short getHealth();
 		void decreaseHealth(short t_value);
 		void setBossStats(short t_health, short t_atk, short t_def, short t_dodge);
+		void weakenShield(short t_value);
+		short getShield();
+		short getDodge();
 		bool getAlive();
 	private:
 		short	health = 3;

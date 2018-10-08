@@ -27,8 +27,7 @@ int main()
 		runTextInfo(bossNum, enemy);
 
 		runBattle(bossNum, player, enemy);
-		std::cout << "Your health left: " << orc.getHealth() << std::endl;
-		std::cout << "Enemys health left: " << troll.getHealth() << std::endl;
+		
 		if (player->getAlive() == false)
 		{
 			break;
@@ -54,25 +53,58 @@ short runAttack(Orc *t_player, Troll *t_enemy)
 	}
 	else if (enemyMove == 1)	// Shields
 	{
-		t_player->decreaseHealth(1);
-
-		stringDecider = 1;
+		//short emyShield = 
+		if (t_enemy->getShield() >= t_player->attack())
+		{
+			t_player->decreaseHealth(1);
+			t_enemy->weakenShield(t_player->attack());
+			stringDecider = 1;
+		}
+		else
+		{
+			t_enemy->decreaseHealth(t_player->attack() - t_enemy->getShield());
+			stringDecider = 9;
+		}
+		
 	}
 	else if (enemyMove == 2)	// Dodges
 	{
+		if (rand() % t_player->getDodge() + 1 < t_enemy->getDodge())
+		{
+			t_player->decreaseHealth(1);
+			stringDecider = 2;
+		}
+		else
+		{
+			t_enemy->decreaseHealth(t_player->attack() * 0.5);
+			stringDecider = 10;
+		}
 
-
-		stringDecider = 2;
 	}
 	return stringDecider;
 }
+
+
 short runDefence(Orc *t_player, Troll *t_enemy)
 {
 	short enemyMove = t_enemy->radomizeAction();
 	short stringDecider{ 0 };
 	if (enemyMove == 0) // Attacks
 	{
-		stringDecider = 3;
+		if (t_player->getShield() >= t_enemy->attack())
+		{
+			t_enemy->decreaseHealth(2);
+			if (t_enemy->getAlive() == true)
+			{
+				t_player->weakenShield(t_enemy->attack());
+			}
+			stringDecider = 3;
+		}
+		else
+		{
+			t_player->decreaseHealth(t_enemy->attack() - t_player->getShield());
+			stringDecider = 11;
+		}
 	}
 	else if (enemyMove == 1)	// Shields
 	{
@@ -90,7 +122,17 @@ short runDodge(Orc *t_player, Troll *t_enemy)
 	short stringDecider{ 0 };
 	if (enemyMove == 0) // Attacks
 	{
-		stringDecider = 6;
+		if (rand() % (t_enemy->getDodge()) + 1 < t_player->getDodge())
+		{
+			t_enemy->decreaseHealth(2);
+			stringDecider = 6;
+		}
+		else
+		{
+			t_player->decreaseHealth(t_enemy->attack() * 0.5);
+			stringDecider = 12;
+		}
+		
 	}
 	else if (enemyMove == 1)	// Shields
 	{
@@ -154,6 +196,9 @@ void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy)
 
 		}
 		runTextBattle(stringReturn);
+		std::cout << std::endl;
+		std::cout << "Your health left: " << t_player->getHealth() << std::endl;
+		std::cout << "Enemys health left: " << t_enemy->getHealth() << std::endl;
 		if (t_enemy->getAlive() == false)
 		{
 			battle = false;
@@ -170,11 +215,11 @@ void runTextInfo(short t_bossNum, Troll *t_enemy)
 	{
 	case 1:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(4,2,1,0);
+		t_enemy->setBossStats(4,2,2,0);
 		break;
 	case 2:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(6,2,2,1);
+		t_enemy->setBossStats(6,2,4,1);
 		break;
 	case 3:
 		std::cout << "" << std::endl;
@@ -182,11 +227,11 @@ void runTextInfo(short t_bossNum, Troll *t_enemy)
 		break;
 	case 4:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(8,3,2,2);
+		t_enemy->setBossStats(8,3,6,2);
 		break;
 	case 5:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(12,4,4,3);
+		t_enemy->setBossStats(12,4,8,3);
 		break;
 	}
 }
@@ -199,28 +244,40 @@ void runTextBattle(short t_bossNum)
 		std::cout << "The enemy also attacks, you both swing, damaging you both" << std::endl;
 		break;
 	case 1:
-		std::cout << "" << std::endl;
+		std::cout << "The enemy shields your attack, the recoil hurts you a bit" << std::endl;
 		break;
 	case 2:
-		std::cout << "" << std::endl;
+		std::cout << "The enemy dodges your attack, you hurt yourself with the follow through" << std::endl;
 		break;
 	case 3:
-		std::cout << "" << std::endl;
+		std::cout << "You shield the enemies attack, your shield is damaged but the Troll has hurt himself" << std::endl;
 		break;
 	case 4:
-		std::cout << "" << std::endl;
+		std::cout << "You size each other up, holding your shields with vigor, nothing happens" << std::endl;
 		break;
 	case 5:
-		std::cout << "" << std::endl;
+		std::cout << "He dodges your block, terrifying, nothing happens" << std::endl;
 		break;
 	case 6:
-		std::cout << "" << std::endl;
+		std::cout << "You dodge the Troll's attack, both his feels and health are hurt" << std::endl;
 		break;
 	case 7:
-		std::cout << "" << std::endl;
+		std::cout << "He shields your dodge, you both look confused and embarrassed" << std::endl;
 		break;
 	case 8:
-		std::cout << "" << std::endl;
+		std::cout << "You out dodge each other, who is a most slippery? only the gods will know" << std::endl;
+		break;
+	case 9:
+		std::cout << "The Troll's shield breaks, you take some follow through damage" << std::endl;
+		break;
+	case 10:
+		std::cout << "The enemy's dodge was unsuccessful, he takes some damage" << std::endl;
+		break;
+	case 11:
+		std::cout << "Your shield can't handle the force, you take some damage" << std::endl;
+		break;
+	case 12:
+		std::cout << "Your dodge was unsuccessful, you are hurt" << std::endl;
 		break;
 	}
 }
