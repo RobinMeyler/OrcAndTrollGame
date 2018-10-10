@@ -5,37 +5,41 @@
 #include "Structs.h"
 using namespace std;
 
-void runTextInfo(short t_bossNum, Troll *t_enemy);
+void runTextInfo(short t_bossNum, Character *t_char[]);
 void runTextBattle(short t_bossNum);
-short runAttack(Orc *t_player, Troll *t_enemy );
-short runDefence(Orc *t_player, Troll *t_enemy);
-short runDodge(Orc *t_player, Troll *t_enemy);
-void runLevelUp(Orc *t_player, LootTable **t_items);
-void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy );
+short runAttack(Character *t_char[]);
+short runDefence(Character *t_char[]);
+short runDodge(Character *t_char[]);
+void runLevelUp();
+void runBattle(short t_bossNum, Character *t_char[] );
 
 int main()
 {
-	Orc orc;
-	Troll troll;
-	Orc *player = &orc;
-	Troll *enemy = &troll;
+	
 	LootTable items[8];
 	LootTable *itemsPointers[8];
+
+	Character *gameCharacters[2];
+	Character **gameCharactersArrPnt = gameCharacters;
+	gameCharacters[0] = &Orc(1);
+	gameCharacters[1] = &Troll(4, 2, 2, 0);
+
+
 
 	// Orc **superPTR = &player;  // Example of a pointer to pointer
 	short bossNum = 1;
 	cout << "You're storming the castle, a troll attacks you from behind like a coward, \nYou brush him back, a fight ensues" << endl;
-	while (player->getAlive() == true)
+	while (gameCharacters[0]->getAlive() == true)
 	{
-		runTextInfo(bossNum, enemy);
+		runTextInfo(bossNum, gameCharactersArrPnt);
 
-		runBattle(bossNum, player, enemy);
+		runBattle(bossNum, gameCharactersArrPnt);
 		
-		if (player->getAlive() == false)
+		if (gameCharacters[0]->getAlive() == false)
 		{
 			break;
 		}
-		runLevelUp(player, itemsPointers);
+		runLevelUp();
 
 		bossNum++;
 	}
@@ -43,43 +47,82 @@ int main()
 	std::cout << "Game Over" << std::endl;
 	system("PAUSE");
 }
+void runBattle(short t_bossNum, Character *t_char[])
+{
+	bool battle = true;
+	short input = 0;
+	short stringReturn{ 9 };
+	std::cout << "Your health left: " << t_char[0]->getHealth() << std::endl;
+	std::cout << "Enemys health left: " << t_char[1]->getHealth() << std::endl;
+	while (battle == true)
+	{
+		cout << "What action do you take?" << endl;
+		cout << "1: Attack, 2: Shield 3: Dodge" << endl;
+		cin >> input;
 
-short runAttack(Orc *t_player, Troll *t_enemy)
+		if (input == 1)
+		{
+			stringReturn = runAttack(t_char);
+		}
+		else if (input == 2)
+		{
+			stringReturn = runDefence(t_char);
+		}
+		else if (input == 3)
+		{
+			stringReturn = runDodge(t_char);
+
+		}
+		runTextBattle(stringReturn);
+		std::cout << std::endl;
+		std::cout << "Your health left: " << t_char[0]->getHealth() << std::endl;
+		std::cout << "Enemys health left: " << t_char[1]->getHealth() << std::endl;
+		if (t_char[1]->getAlive() == false)
+		{
+			battle = false;
+		}
+		if (t_char[0]->getAlive() == false)
+		{
+			break;
+		}
+	}
+}
+short runAttack(Character *t_char[])
 {
 	short enemyMove = 0;// t_enemy->radomizeAction();
 	short stringDecider{ 0 };
 	if (enemyMove == 0) // Attacks
 	{
-		t_player->decreaseHealth(t_enemy->attack());
-		t_enemy->decreaseHealth(t_player->attack());
+		t_char[0]->decreaseHealth(t_char[1]->attack());
+		t_char[1]->decreaseHealth(t_char[0]->attack());
 		stringDecider = 0;
 	}
 	else if (enemyMove == 1)	// Shields
 	{
 		//short emyShield = 
-		if (t_enemy->getShield() >= t_player->attack())
+		if (t_char[1]->getShield() >= t_char[0]->attack())
 		{
-			t_player->decreaseHealth(1);
-			t_enemy->weakenShield(t_player->attack());
+			t_char[0]->decreaseHealth(1);
+			t_char[1]->weakenShield(t_char[0]->attack());
 			stringDecider = 1;
 		}
 		else
 		{
-			t_enemy->decreaseHealth(t_player->attack() - t_enemy->getShield());
+			t_char[1]->decreaseHealth(t_char[0]->attack() - t_char[1]->getShield());
 			stringDecider = 9;
 		}
 		
 	}
 	else if (enemyMove == 2)	// Dodges
 	{
-		if (rand() % t_player->getDodge() + 1 < t_enemy->getDodge())
+		if (rand() % t_char[0]->getDodge() + 1 < t_char[1]->getDodge())
 		{
-			t_player->decreaseHealth(1);
+			t_char[0]->decreaseHealth(1);
 			stringDecider = 2;
 		}
 		else
 		{
-			t_enemy->decreaseHealth(t_player->attack() * 0.5);
+			t_char[1]->decreaseHealth(t_char[0]->attack() * 0.5);
 			stringDecider = 10;
 		}
 
@@ -88,24 +131,24 @@ short runAttack(Orc *t_player, Troll *t_enemy)
 }
 
 
-short runDefence(Orc *t_player, Troll *t_enemy)
+short runDefence(Character *t_char[])
 {
-	short enemyMove = t_enemy->radomizeAction();
+	short enemyMove = t_char[1]->randomizeAction();
 	short stringDecider{ 0 };
 	if (enemyMove == 0) // Attacks
 	{
-		if (t_player->getShield() >= t_enemy->attack())
+		if (t_char[0]->getShield() >= t_char[1]->attack())
 		{
-			t_enemy->decreaseHealth(2);
-			if (t_enemy->getAlive() == true)
+			t_char[1]->decreaseHealth(2);
+			if (t_char[1]->getAlive() == true)
 			{
-				t_player->weakenShield(t_enemy->attack());
+				t_char[0]->weakenShield(t_char[1]->attack());
 			}
 			stringDecider = 3;
 		}
 		else
 		{
-			t_player->decreaseHealth(t_enemy->attack() - t_player->getShield());
+			t_char[0]->decreaseHealth(t_char[1]->attack() - t_char[0]->getShield());
 			stringDecider = 11;
 		}
 	}
@@ -119,20 +162,20 @@ short runDefence(Orc *t_player, Troll *t_enemy)
 	}
 	return stringDecider;
 }
-short runDodge(Orc *t_player, Troll *t_enemy)
+short runDodge(Character *t_char[])
 {
-	short enemyMove = t_enemy->radomizeAction();
+	short enemyMove = t_char[1]->randomizeAction();
 	short stringDecider{ 0 };
 	if (enemyMove == 0) // Attacks
 	{
-		if (rand() % (t_enemy->getDodge()) + 1 < t_player->getDodge())
+		if (rand() % (t_char[0]->getDodge()) + 1 < t_char[0]->getDodge())
 		{
-			t_enemy->decreaseHealth(2);
+			t_char[0]->decreaseHealth(2);
 			stringDecider = 6;
 		}
 		else
 		{
-			t_player->decreaseHealth(t_enemy->attack() * 0.5);
+			t_char[0]->decreaseHealth(t_char[0]->attack() * 0.5);
 			stringDecider = 12;
 		}
 		
@@ -175,67 +218,30 @@ void runLevelUp()
 
 	}
 }
-void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy)
-{
-	bool battle = true;
-	short input = 0;
-	short stringReturn{ 9 };
-	while (battle == true)
-	{
-		cout << "What action do you take?" << endl;
-		cout << "1: Attack, 2: Shield 3: Dodge" << endl;
-		cin >> input;
-		
-		if (input == 1)
-		{
-			stringReturn = runAttack(t_player, t_enemy);
-		}
-		else if (input == 2)
-		{
-			stringReturn = runDefence(t_player, t_enemy);
-		}
-		else if (input == 3)
-		{
-			stringReturn = runDodge(t_player, t_enemy);
 
-		}
-		runTextBattle(stringReturn);
-		std::cout << std::endl;
-		std::cout << "Your health left: " << t_player->getHealth() << std::endl;
-		std::cout << "Enemys health left: " << t_enemy->getHealth() << std::endl;
-		if (t_enemy->getAlive() == false)
-		{
-			battle = false;
-		}
-		if (t_player->getAlive() == false)
-		{
-			break;
-		}
-	}
-}
-void runTextInfo(short t_bossNum, Troll *t_enemy)
+void runTextInfo(short t_bossNum, Character *t_char[])
 {
 	switch (t_bossNum)
 	{
 	case 1:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(4,2,2,0);
+		t_char[1]->setStats(4,2,2,0);
 		break;
 	case 2:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(6,2,4,1);
+		t_char[1]->setStats(6,2,4,1);
 		break;
 	case 3:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(4,3,2,2);
+		t_char[1]->setStats(4,3,2,2);
 		break;
 	case 4:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(8,3,6,2);
+		t_char[1]->setStats(8,3,6,2);
 		break;
 	case 5:
 		std::cout << "" << std::endl;
-		t_enemy->setBossStats(12,4,8,3);
+		t_char[1]->setStats(12,4,8,3);
 		break;
 	}
 }

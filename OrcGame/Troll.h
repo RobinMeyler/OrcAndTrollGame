@@ -6,10 +6,9 @@ class Troll : public Character {
 		Troll() = default;
 		Troll(short t_health, short t_atk, short t_def, short t_dodge);
 		short attack();
-		short radomizeAction();
 		short getHealth();
 		void decreaseHealth(short t_value);
-		void setBossStats(short t_health, short t_atk, short t_def, short t_dodge);
+		void setStats(short t_health, short t_atk, short t_def, short t_dodge);
 		void weakenShield(short t_value);
 		short getShield();
 		short getDodge();

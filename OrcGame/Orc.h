@@ -3,6 +3,7 @@
 
 class Orc : public Character {
 public:
+	Orc(int four);
 	void barrelRoll();
 	void walk();
 	short attack();
@@ -10,6 +11,7 @@ public:
 	bool getAlive();
 	void decreaseHealth(short t_value);
 	void increaseStats(short t_health, short t_atk, short t_def, short t_dodge);
+	void setStats(short t_health, short t_atk, short t_def, short t_dodge);
 	short getShield();
 	short getDodge();
 	void weakenShield(short t_value);

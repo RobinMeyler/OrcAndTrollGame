@@ -13,6 +13,12 @@ void Character::flip()
 	cout << "just in case they are too young to walk yet" << endl;
 }
 
+ short Character::randomizeAction()
+ {
+	 short random = rand() % 3;
+	 return random;
+ }
+
 
  bool Character::getAlive()
  { 

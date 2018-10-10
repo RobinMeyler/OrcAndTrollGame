@@ -17,11 +17,7 @@ short Troll::attack()
 	return atkPower;
 }
 
-short Troll::radomizeAction()
-{
-	short random = rand() % 3;
-	return random;
-}
+
 
 short Troll::getHealth()
 {
@@ -33,7 +29,7 @@ void Troll::decreaseHealth(short t_value)
 	health = health - t_value;
 }
 
-void Troll::setBossStats(short t_health, short t_atk, short t_def, short t_dodge)
+void Troll::setStats(short t_health, short t_atk, short t_def, short t_dodge)
 {
 	health =  t_health;
 	atkPower =  t_atk;

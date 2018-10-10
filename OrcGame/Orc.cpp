@@ -3,6 +3,12 @@
 using namespace std;
 
 
+
+
+Orc::Orc(int four)
+{
+}
+
 void Orc::barrelRoll()
 {
 	cout << "rooooooolllllllllllinggggggg" << endl;
@@ -28,6 +34,11 @@ void Orc::decreaseHealth(short t_value)
 
 void Orc::increaseStats(short t_health, short t_atk, short t_def, short t_dodge)
 {
+}
+
+void Orc::setStats(short t_health, short t_atk, short t_def, short t_dodge)
+{
+	
 }
 
 void Orc::weakenShield(short t_value)
