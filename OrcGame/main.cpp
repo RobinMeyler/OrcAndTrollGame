@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Orc.h"
 #include "Troll.h"
+#include "Structs.h"
 using namespace std;
 
 void runTextInfo(short t_bossNum, Troll *t_enemy);
@@ -9,7 +10,7 @@ void runTextBattle(short t_bossNum);
 short runAttack(Orc *t_player, Troll *t_enemy );
 short runDefence(Orc *t_player, Troll *t_enemy);
 short runDodge(Orc *t_player, Troll *t_enemy);
-void runLevelUp();
+void runLevelUp(Orc *t_player, LootTable **t_items);
 void runBattle(short t_bossNum, Orc *t_player, Troll *t_enemy );
 
 int main()
@@ -18,6 +19,8 @@ int main()
 	Troll troll;
 	Orc *player = &orc;
 	Troll *enemy = &troll;
+	LootTable items[8];
+	LootTable *itemsPointers[8];
 
 	// Orc **superPTR = &player;  // Example of a pointer to pointer
 	short bossNum = 1;
@@ -32,7 +35,7 @@ int main()
 		{
 			break;
 		}
-		runLevelUp();
+		runLevelUp(player, itemsPointers);
 
 		bossNum++;
 	}
@@ -148,6 +151,7 @@ void runLevelUp()
 {
 	short input = 0;
 	cout << "Which stat would you like to increase?" << endl;
+	cout << "Take a chance at the loot chest, results my varry?" << endl;
 	cout << "1: Attack, 2: Shield 3: Dodge 4: Hp" << endl;
 	while (input < 1 && input > 4)
 	{
