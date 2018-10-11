@@ -22,7 +22,7 @@ struct LootTable
 
 	short returnAtk() {
 		std::srand(std::time(0));
-		short random = rand() % 4;
+		short random = rand() % 4 + 1;
 		short toRet = 0;
 		if (random == 1)
 		{
@@ -39,7 +39,7 @@ struct LootTable
 			toRet = mace;
 			std::cout << "You have recieved the Mace" << std::endl;
 		}
-		else if (random == 3)
+		else if (random == 4)
 		{
 			toRet = kingsDagger;
 			std::cout << "You have recieved the King's Dagger" << std::endl;
@@ -48,7 +48,7 @@ struct LootTable
 	};
 	short returnDef() {
 		std::srand(std::time(0));
-		short random = rand() % 2;
+		short random = rand() % 2 + 1;
 		short toRet = 0;
 		if (random == 1)
 		{
@@ -65,7 +65,7 @@ struct LootTable
 	};
 	short returnHP() {
 		std::srand(std::time(0));
-		short random = rand() % 2;
+		short random = rand() % 2 + 1;
 		short toRet = 0;
 		if (random == 1)
 		{
@@ -82,7 +82,7 @@ struct LootTable
 	};
 	short returnDodge() {
 		std::srand(std::time(0));
-		short random = rand() % 2;
+		short random = rand() % 2 + 1;
 		short toRet = 0;
 		if (random == 1)
 		{

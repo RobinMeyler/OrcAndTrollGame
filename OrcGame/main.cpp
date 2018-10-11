@@ -23,7 +23,8 @@ int main()
 	Character **gameCharactersArrPnt = gameCharacters;		// Pointer to a pointer of the array
 	gameCharacters[0] = &Orc(1);									// Declaring the characters
 	gameCharacters[1] = &Troll(4, 2, 2, 0);
-
+	std::cout << "Your army is dead, it's just you. \nYour anger takes over and you charge at the enemies. \nKing's head is all you want." << std::endl;
+	std::cout << "-----------------------------------------------------------------" << std::endl;
 	std::cout << "Your hp: " << gameCharacters[0]->getHealth() 
 				<< " Atk: " << gameCharacters[0]->attack()
 				<< " Def: " << gameCharacters[0]->getShield() 
@@ -35,6 +36,7 @@ int main()
 	while (gameCharacters[0]->getAlive() == true)
 	{
 		runTextInfo(bossNum, gameCharactersArrPnt);								// Setting current boss stats and outputting their info
+
 		std::cout << "Enemy Stats hp: " << gameCharacters[1]->getHealth() 
 				<< " Atk: " << gameCharacters[1]->attack()
 				<< " Def: " << gameCharacters[1]->getShield() 
@@ -245,24 +247,29 @@ void runTextInfo(short t_bossNum, Character *t_char[])
 	switch (t_bossNum)
 	{
 	case 1:
-		std::cout << "" << std::endl;
+		std::cout << "-----------------------------------------------------------------" << std::endl;
+		std::cout << "You meet Egor, the brilliant. \nHe was given this name with sarcasm by his friends, he doesn't like it." << std::endl;
 		t_char[1]->setStats(4,2,2,0);
 		break;
 	case 2:
-		std::cout << "" << std::endl;
-		t_char[1]->setStats(6,2,4,1);
+		std::cout << "-----------------------------------------------------------------" << std::endl;
+		std::cout << "Ronald swings at you from the left. \nHe wouldn't be described as an all round figher, his stats are low but he hits very hard" << std::endl;
+		t_char[1]->setStats(3,6,4,1);
 		break;
 	case 3:
-		std::cout << "" << std::endl;
-		t_char[1]->setStats(4,3,2,2);
+		std::cout << "-----------------------------------------------------------------" << std::endl;
+		std::cout << "Snoop Dogg senior comes froma around the corner. \nHe gets his name from his sick rhymes and beats, a good all rounder" << std::endl;
+		t_char[1]->setStats(4,3,5,2);
 		break;
 	case 4:
-		std::cout << "" << std::endl;
+		std::cout << "-----------------------------------------------------------------" << std::endl;
+		std::cout << "Prince Timao, son of the Troll king. \nOne day we will be king, everything to prove, everything to lose." << std::endl;
 		t_char[1]->setStats(8,3,6,2);
 		break;
 	case 5:
-		std::cout << "" << std::endl;
-		t_char[1]->setStats(12,4,8,3);
+		std::cout << "-----------------------------------------------------------------" << std::endl;
+		std::cout << "King Joe has you caught by his attention. \n He doesn't really care much that you defeated his son or that you are beating his army. \nHe's just bored. Though he is very strong." << std::endl;
+		t_char[1]->setStats(12,7,8,3);
 		break;
 	}
 }
