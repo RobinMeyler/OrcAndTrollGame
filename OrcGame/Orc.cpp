@@ -1,3 +1,4 @@
+#pragma once
 #include "Orc.h"
 #include <iostream>
 using namespace std;
@@ -38,7 +39,10 @@ void Orc::increaseStats(short t_health, short t_atk, short t_def, short t_dodge)
 
 void Orc::setStats(short t_health, short t_atk, short t_def, short t_dodge)
 {
-	
+	health = t_health;
+	atkPower = t_atk;
+	defence = t_def;
+	dodge = t_dodge;
 }
 
 void Orc::weakenShield(short t_value)

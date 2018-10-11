@@ -1,9 +1,10 @@
 #pragma once
-
+#include <iostream>
+#include <ctime>
 class Character
 {
 public:
-
+	
 	//Virtual
 	void flip();
 	virtual void walk();

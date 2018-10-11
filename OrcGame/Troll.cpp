@@ -1,3 +1,4 @@
+#pragma once
 #include "Troll.h"
 #include <iostream>
 using namespace std;
